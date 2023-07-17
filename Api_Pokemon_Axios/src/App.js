@@ -1,10 +1,11 @@
 import './App.css';
-import Apiwalker from './components/Apiwalker'
+import Pokemon from './components/Pokemon'
+import axios from 'axios';
 
 function App() {
   return (
     <div className="App">
-     <Apiwalker></Apiwalker>
+     <Pokemon></Pokemon>
     </div>
   );
 }

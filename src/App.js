@@ -4,7 +4,7 @@ import Apiwalker from './components/Apiwalker'
 function App() {
   return (
     <div className="App">
-     <Apiwalker></Apiwalker>
+    <Apiwalker></Apiwalker>
     </div>
   );
 }

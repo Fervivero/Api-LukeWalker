@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Apiwalker = () => {
@@ -7,20 +7,21 @@ const Apiwalker = () => {
     const [inputValue, setInputValue] = useState("");
     const [error, setError] = useState(false);
 
+    useEffect(() => {
+        if (resources && inputValue) {
+            axios.get(`https://swapi.dev/api/${resources}/${inputValue}`)
+                .then((res) => {
+                    setData(res.data);
+                    setError(false);
+                }).catch((error) => {
+                    console.log(error);
+                    setError(true);
+                });
+        }
+    }, [resources, inputValue]);
+
     const submitData = (ev) => {
         ev.preventDefault();
-        axios
-            .get(`https://swapi.dev/api/${resources}/${inputValue}`)
-            .then((res) => {
-                setData(res.data);
-                setError(false);
-                setInputValue("");
-                console.log(res.data);
-            })
-            .catch((error) => {
-                console.log(error);
-                setError(true);
-            });
     };
 
     return (
@@ -30,17 +31,22 @@ const Apiwalker = () => {
                 <select name="resources" value={resources} onChange={(evento) => {
                     setResources(evento.target.value);
                 }}>
-                    <option value="films" >Films</option>
-                    <option value="people" >People</option>
-                    <option value="planets" >Planets</option>
-                    <option value="species" >Species</option>
-                    <option value="starships" >Starships</option>
-                    <option value="vehicles" >Vehicles</option>
+                    <option value="films">Films</option>
+                    <option value="people">People</option>
+                    <option value="planets">Planets</option>
+                    <option value="species">Species</option>
+                    <option value="starships">Starships</option>
+                    <option value="vehicles">Vehicles</option>
                 </select>
                 <label>id:</label>
-                <input type="text" name="id" value={inputValue} onChange={(evento) => {
-                    setInputValue(evento.target.value);
-                }} />
+                <input
+                    type="text"
+                    name="id"
+                    value={inputValue}
+                    onChange={(evento) => {
+                        setInputValue(evento.target.value);
+                    }}
+                />
                 <input type="submit" value="Search" className="button" />
             </form>
             {error && (
@@ -73,3 +79,5 @@ const Apiwalker = () => {
 };
 
 export default Apiwalker;
+
+        
